@@ -1,0 +1,18 @@
+.mainWindow {
+    display: flex;
+    width: 100%;
+    height: 900px;
+    padding: 20px;
+    &__planetsColumn,
+    &__sattelitesColumn {
+        width: 20%;
+        height: 100%;
+        border: 1px solid black;
+        overflow: scroll;
+    }
+    &__spaceMap {
+        width: 50%;
+        height: 100%;
+        border: 1px solid black;
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module",
+        "allowImportExportEverywhere": false,
+        "codeFrame": false
+    },
+    "extends": ["airbnb-base", "plugin:react/recommended"],
+    "globals": {
+        "document": true,
+        "window": true
+    },
+    "plugins": ["react"],
+    "rules": {
+        "import/no-extraneous-dependencies": false,
+        "import/no-unresolved": false,
+        "import/extensions": false,
+        "import/prefer-default-export": false,
+        "comma-dangle": "off",
+        "brace-style": ["error", "stroustrup"],
+        "indent": ["error", 4],
+        "max-len": [
+            "error", 
+            { 
+                "code": 120,
+                "comments": 120
+            }
+        ],
+        "class-methods-use-this": false,
+        "linebreak-style": ["error", "windows"],
+        "no-lonely-if": 0,
+        "no-use-before-define": [
+            "error",
+            {
+                "functions": false,
+                "classes": true
+            }
+        ],
+        "no-extraneous-dependencies": false,
+        "no-underscore-dangle": [
+            "error",
+            {
+                "allow": ["__preloaded_options__"]
+            }
+        ],
+        "react/jsx-filename-extension": [
+            "error",
+            {
+                "extensions": [".js", ".jsx"]
+            }
+        ],
+        "react/jsx-indent": ["error", 4]
+    }
+}

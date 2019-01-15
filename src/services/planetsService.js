@@ -9,6 +9,10 @@ export const planetsService = {
         return clone(this.planets);
     },
 
+    async getPlanetById(id) {
+        return clone(this.planets.filter(x => x.id === id));
+    },
+
     async update(planet) {
         this.planets = this.planets.map(x => x.id === planet.id ? clone(planet) : x);
         sessionStorage.setItem('planets', JSON.stringify(this.planets));

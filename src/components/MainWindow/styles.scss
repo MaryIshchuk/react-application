@@ -11,8 +11,8 @@
         overflow: scroll;
     }
     &__spaceMap {
-        width: 50%;
-        height: 100%;
+        min-width: 800px;
+        min-height: 860px;
         border: 1px solid black;
     }
 }

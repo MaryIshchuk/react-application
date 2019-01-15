@@ -9,6 +9,10 @@ export const sattelitesService = {
         return clone(this.sattelites);
     },
 
+    async getSatteliteById(sattelite) {
+        return clone(this.sattelites.filter(x => x.id === sattelite.id));
+    },
+
     async update(sattelite) {
         this.sattelites = this.sattelites.map(x => x.id === sattelite.id ? clone(sattelite) : x);
         sessionStorage.setItem('sattelites', JSON.stringify(this.sattelites));

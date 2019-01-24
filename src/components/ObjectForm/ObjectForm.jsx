@@ -1,19 +1,19 @@
-import React, { PureComponent } from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import React, { PureComponent } from 'react';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import Header from '../Header/Header';
-import { planetsService } from "../../services/planetsService";
-import { sattelitesService } from "../../services/sattelitesService";
+import { planetsService } from '../../services/planetsService';
+import { sattelitesService } from '../../services/sattelitesService';
 
-import "./styles.scss";
+import './styles.scss';
 
 class ObjectForm extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: "",
-      type: "",
+      title: '',
+      type: '',
       radius: 0,
       rotation: 0,
       time: 0,
@@ -40,7 +40,7 @@ class ObjectForm extends PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.type === "planet") {
+    if (this.props.type === 'planet') {
       let currentPlanet = {
         title: this.props.title,
         radius: this.props.radius,
@@ -54,7 +54,7 @@ class ObjectForm extends PureComponent {
         time: currentPlanet.time,
         planets: this.props.planets
       });
-    } else if (this.props.type === "sattelite") {
+    } else if (this.props.type === 'sattelite') {
       let currentPlanet = {
         title: this.props.title,
         radius: this.props.radius,
@@ -96,13 +96,29 @@ class ObjectForm extends PureComponent {
   }
 
   updateItem(e) {
-    let newItem = {
-      id: this.props.id,
-      title: this.state.title,
-      radius: this.state.radius,
-      rotation: this.state.rotation,
-      time: this.state.time
-    };
+    let newItem = {};
+    if (this.props.type === 'planet') {
+      newItem = {
+        id: this.props.id,
+        title: this.state.title,
+        radius: this.state.radius,
+        rotation: this.state.rotation,
+        time: this.state.time
+      }
+    } else if (this.props.type ==='sattelite') {
+      debugger
+      newItem = {
+        id: this.props.id,
+        title: this.state.title,
+        radius: this.state.radius,
+        rotation: this.state.rotation,
+        time: this.state.time,
+        planetId: this.props.planetId
+      }
+    }
+
+
+    debugger
 
     this.props.updateItem(this.props.type, newItem);
   };
@@ -117,46 +133,46 @@ class ObjectForm extends PureComponent {
 
   render() {
     return (
-      <Form className="objectForm" onClick={this.showSattelitesForPlanet}>
+      <Form className='objectForm' onClick={this.props.showSattelitesForPlanet ? this.showSattelitesForPlanet : () => { return null }}>
         <Header title={this.state.title} />
         <FormGroup>
-          <Label for="title">Title</Label>
+          <Label for='title'>Title</Label>
           <Input
-            type="text"
-            id="title"
+            type='text'
+            id='title'
             value={this.state.title}
             onChange={this.handleTitleChange}
-            placeholder="Enter planet/sattelite title"
+            placeholder='Enter planet/sattelite title'
           />
         </FormGroup>
         <FormGroup>
-          <Label for="radius">Radius</Label>
+          <Label for='radius'>Radius</Label>
           <Input
-            type="number"
-            id="radius"
+            type='number'
+            id='radius'
             value={this.state.radius}
             onChange={this.handleRadiusChange}
-            placeholder="Enter planet/sattelite radius"
+            placeholder='Enter planet/sattelite radius'
           />
         </FormGroup>
         <FormGroup>
-          <Label for="rotation">Rotation</Label>
+          <Label for='rotation'>Rotation</Label>
           <Input
-            type="number"
-            id="rotation"
+            type='number'
+            id='rotation'
             value={this.state.rotation}
             onChange={this.handleRotationChange}
-            placeholder="Enter rotation"
+            placeholder='Enter rotation'
           />
         </FormGroup>
         <FormGroup>
-          <Label for="time">Time</Label>
+          <Label for='time'>Time</Label>
           <Input
-            type="number"
-            id="time"
+            type='number'
+            id='time'
             value={this.state.time}
             onChange={this.handleTimeChange}
-            placeholder="Enter planet/sattelite time"
+            placeholder='Enter planet/sattelite time'
           />
         </FormGroup>
         <Button onClick={this.updateItem}>Save</Button>

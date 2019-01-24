@@ -14,6 +14,7 @@ export const sattelitesService = {
     },
 
     async update(sattelite) {
+        debugger
         this.sattelites = this.sattelites.map(x => x.id === sattelite.id ? clone(sattelite) : x);
         sessionStorage.setItem('sattelites', JSON.stringify(this.sattelites));
     },

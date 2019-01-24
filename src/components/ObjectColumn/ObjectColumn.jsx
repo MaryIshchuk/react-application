@@ -16,8 +16,8 @@ class ObjectColumn extends PureComponent {
         super(props);
 
         this.state = {
-            planets: [],
-            sattelites: [],
+            planets: this.props.planets,
+            sattelites: this.props.sattelites,
             sattelitesForms: []
         };
 
@@ -27,51 +27,27 @@ class ObjectColumn extends PureComponent {
         this.updateItem = this.updateItem.bind(this);
     }
 
-    componentDidMount() {
-        planetsService
-            .getAll()
-            .then(planets => this.setState({ planets: planets }));
-        sattelitesService
-            .getAll()
-            .then(sattelites => this.setState({ sattelites: sattelites }));
-    }
+    // componentDidMount() {
+    //     planetsService
+    //         .getAll()
+    //         .then(planets => this.setState({ planets: planets }));
+    //     sattelitesService
+    //         .getAll()
+    //         .then(sattelites => this.setState({ sattelites: sattelites }));
+    // }
 
     addPlanetObjectForm = async e => {
-        let newPlanet = {
-            id: this.state.planets.length + 1,
-            title: "",
-            radius: 0,
-            rotation: 0,
-            time: 0
-        };
-
-        await planetsService.add(newPlanet);
-
-        this.setState({
-            ...this.state,
-            planets: [...this.state.planets, newPlanet]
-        });
+        this.props.addPlanetObjectForm();
     };
 
     updateItem(type, newItem) {
+        debugger
         this.props.updateItem(type, newItem);
     }
 
     addSatteliteObjectForm = async e => {
-        let newSattelite = {
-            id: this.state.sattelites.length + 1,
-            title: "",
-            radius: 0,
-            rotation: 0,
-            time: 0
-        };
-
-        await sattelitesService.add(newSattelite);
-
-        this.setState({
-            ...this.state,
-            sattelites: [...this.state.sattelites, newSattelite]
-        });
+        debugger
+        this.props.addSatteliteObjectForm();
     };
 
     showSattelitesForPlanet(id) {
@@ -112,7 +88,9 @@ class ObjectColumn extends PureComponent {
                         rotation={this.props.sattelites[i].rotation}
                         radius={this.props.sattelites[i].radius}
                         time={this.props.sattelites[i].time}
+                        planetId={this.props.sattelites[i].planetId}
                         planets={this.props.planets}
+                        updateItem={this.updateItem}
                     />
                 );
             }

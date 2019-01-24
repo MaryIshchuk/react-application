@@ -18,6 +18,9 @@ class MainWindow extends PureComponent {
         };
 
         this.updateItem = this.updateItem.bind(this);
+        this.addPlanetObjectForm = this.addPlanetObjectForm.bind(this);
+        this.addSatteliteObjectForm = this.addSatteliteObjectForm.bind(this);
+        this.updateItem = this.updateItem.bind(this);
         this.getSattelitesForPlanet = this.getSattelitesForPlanet.bind(this);
     }
 
@@ -39,7 +42,43 @@ class MainWindow extends PureComponent {
         return false;
     }
 
+    addPlanetObjectForm = async e => {
+        let newPlanet = {
+            id: this.state.planets.length + 1,
+            title: "",
+            radius: 0,
+            rotation: 0,
+            time: 0
+        };
+
+        await planetsService.add(newPlanet);
+
+        this.setState({
+            ...this.state,
+            planets: [...this.state.planets, newPlanet]
+        });
+    };
+
+    addSatteliteObjectForm = async (emptySattelite) => {
+        
+        let newSattelite = {
+            id: this.state.sattelites.length + 1,
+            title: "",
+            radius: 0,
+            rotation: 0,
+            time: 0
+        };
+
+        await sattelitesService.add(newSattelite);
+
+        this.setState({
+            ...this.state,
+            sattelites: [...this.state.sattelites, newSattelite]
+        });
+    };
+
     getSattelitesForPlanet(id) {
+        debugger
         let counter = 0;
 
         for (let i = 0; i < this.state.planets.length; i++) {
@@ -53,6 +92,9 @@ class MainWindow extends PureComponent {
                         rotation: '0',
                         time: '0'
                     }
+
+                this.addSatteliteObjectForm(emptySattelite);
+
                 this.setState({
                     sattelitesForCurrentPlanet: [...this.state.sattelitesForCurrentPlanet, emptySattelite]
                 });
@@ -76,10 +118,14 @@ class MainWindow extends PureComponent {
                         rotation: '0',
                         time: '0'
                     }
-                this.setState({
-                    ...this.state,
-                    sattelitesForCurrentPlanet: [...this.state.sattelitesForCurrentPlanet, emptySattelite]
-                });
+
+                    this.addSatteliteObjectForm(emptySattelite);
+
+                    this.setState({
+                        ...this.state,
+                        sattelites: [...this.state.sattelites, emptySattelite],
+                        sattelitesForCurrentPlanet: [...this.state.sattelitesForCurrentPlanet, emptySattelite]
+                    });
             }
         }
     }
@@ -92,6 +138,7 @@ class MainWindow extends PureComponent {
             });
             await planetsService.update(newItem);
         } else if (type === 'sattelite') {
+            debugger
             this.setState({
                 ...this.state,
                 sattelites: this.state.sattelites.map(x => x.id === newItem.id ? newItem : x)
@@ -105,12 +152,15 @@ class MainWindow extends PureComponent {
             <div className="mainWindow">
                 <ObjectColumn className='mainWindow__planetsColumn'
                     title='planets'
+                    addPlanetObjectForm={this.addPlanetObjectForm}
                     updateItem={this.updateItem}
                     getSattelitesForPlanet={this.getSattelitesForPlanet}
                     planets={this.state.planets} />
                 <ObjectColumn className='mainWindow__sattelitesColumn'
-                    sattelites={this.state.sattelites}
-                    title='sattelites' />
+                    title='sattelites'
+                    addSatteliteObjectForm={this.addSatteliteObjectForm}
+                    updateItem={this.updateItem}
+                    sattelites={this.state.sattelites} />
                 <SpaceMap className='mainWindow__spaceMap'
                     planets={this.state.planets}
                     sattelites={this.state.sattelites}
